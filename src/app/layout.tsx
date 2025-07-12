@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/lib/auth/AuthContext";
+import { Toaster } from "@/components/ui/sonner";
+import { allFontVars, geistMono } from "@/lib/fonts";
+import { LoadingProvider, LoadingBar } from "@/components/LoadingProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "@/css/globals.css";
+import "@/css/red.css";
+import "@/css/rose.css";
+import "@/css/orange.css";
+import "@/css/green.css";
+import "@/css/blue.css";
+import "@/css/yellow.css";
+import "@/css/violet.css";
+import "@/css/outher.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +26,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${allFontVars.map((f) => f.variable).join(" ")} ${
+        geistMono.variable
+      }`}
+    >
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <LoadingProvider>
+              <LoadingBar />
+              {children}
+              <Toaster />
+            </LoadingProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
