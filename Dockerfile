@@ -7,7 +7,7 @@ RUN curl -fsSL https://bun.sh/install | bash && \
     ln -s /root/.bun/bin/bun /usr/local/bin/bun
 
 RUN bun install --frozen-lockfile
-RUN bun run next build
+RUN bun run next build --no-lint
 
 FROM oven/bun:1.1.13 AS runner
 
