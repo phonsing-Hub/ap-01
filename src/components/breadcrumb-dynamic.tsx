@@ -16,7 +16,7 @@ export function DynamicBreadcrumb() {
   const breadcrumbs = generateBreadcrumbs(pathname);
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="hidden lg:block">
       <BreadcrumbList>
         {breadcrumbs.map((crumb, index) => (
           <React.Fragment key={crumb.href}>

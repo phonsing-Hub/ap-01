@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown, Plus, Boxes, type LucideIcon  } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -24,7 +24,7 @@ export function TeamSwitcher({
 }: {
   teams: {
     name: string;
-    logo: React.ElementType;
+    logo: LucideIcon;
     plan: string;
   }[];
 }) {
@@ -42,10 +42,10 @@ export function TeamSwitcher({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                {/* <activeTeam.logo className="size-4" /> */}
+                <Boxes className="size-4"/>
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{activeTeam.name}</span>
@@ -67,17 +67,17 @@ export function TeamSwitcher({
               <DropdownMenuItem
                 key={team.name}
                 onClick={() => setActiveTeam(team)}
-                className="gap-2 p-2"
+                className="gap-2 p-2 cursor-pointer"
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
-                  {/* <team.logo className="size-3.5 shrink-0" /> */}
+                  {team.logo && <team.logo className="size-3.5 shrink-0" />}
                 </div>
                 {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                {/* <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut> */}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem className="gap-2 p-2 cursor-pointer">
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />
               </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar } from "@/components/sidebar/Sidebar";
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/profile/sidebar-nav";
 import ProtectedRoute from "@/hooks/ProtectedRoute";
@@ -28,8 +28,7 @@ function layout({
     <ProtectedRoute>
     <Sidebar>
       <>
-        <div className="md:hidden"></div>
-        <div className="hidden space-y-6 p-10 pb-16 md:block">
+        <div className=" space-y-6 p-10 pb-16">
           <div className="space-y-0.5">
             <h2 className="text-2xl font-bold tracking-tight">Profile</h2>
             <p className="text-muted-foreground">

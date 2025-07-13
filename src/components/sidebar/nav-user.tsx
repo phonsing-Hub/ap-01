@@ -8,7 +8,7 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
-  User
+  User,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,12 +29,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/lib/auth/AuthContext";
- 
+
 const baseUrlimg = process.env.NEXT_PUBLIC_API_IMG || "https://mygoapi";
 
 function SideUser() {
   const { isMobile } = useSidebar();
- const {  user } = useAuth();
+  const { user } = useAuth();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -49,7 +49,9 @@ function SideUser() {
                 <AvatarFallback className="rounded-lg">AP</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user?.display_name}</span>
+                <span className="truncate font-medium">
+                  {user?.display_name}
+                </span>
                 <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -68,7 +70,9 @@ function SideUser() {
                   <AvatarFallback className="rounded-lg">AP</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user?.display_name}</span>
+                  <span className="truncate font-medium">
+                    {user?.display_name}
+                  </span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
@@ -108,14 +112,13 @@ function SideUser() {
 }
 
 function NavUser() {
+  const { logout, user } = useAuth();
+  const router = useRouter();
 
-    const { logout, user } = useAuth();
-    const router = useRouter();
-
-    const handleLogout = async ()=>{
-      await logout()
-      router.push("/login")
-    }
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
 
   return (
     <SidebarMenu>
@@ -124,7 +127,7 @@ function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <div className="flex">
                 <Badge
@@ -134,7 +137,10 @@ function NavUser() {
                   99
                 </Badge>
                 <Avatar className=" size-10">
-                  <AvatarImage src={`${baseUrlimg}${user?.avatar}`} alt={user?.first_name} />
+                  <AvatarImage
+                    src={`${baseUrlimg}${user?.avatar}`}
+                    alt={user?.first_name}
+                  />
                   <AvatarFallback>AP</AvatarFallback>
                 </Avatar>
               </div>
@@ -162,28 +168,33 @@ function NavUser() {
                   <AvatarFallback className="rounded-lg">AP</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user?.display_name}</span>
+                  <span className="truncate font-medium">
+                    {user?.display_name}
+                  </span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={()=>router.push("/profile")}>
+              <DropdownMenuItem
+                onClick={() => router.push("/profile")}
+                className="cursor-pointer"
+              >
                 <User />
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem>
-               <Settings />
+              <DropdownMenuItem className="cursor-pointer">
+                <Settings />
                 Setting
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <LogOut />
               Log out
             </DropdownMenuItem>

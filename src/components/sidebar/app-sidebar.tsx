@@ -1,21 +1,9 @@
 "use client"
 
 import * as React from "react"
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
-
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+import { NavMain } from "@/components/sidebar/nav-main"
+import { NavSecondary } from "@/components/sidebar/nav-secondary"
+//import { NavProjects } from "@/components/nav-projects"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
@@ -34,9 +22,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={menuData.navMain}  title="Main"/>
+        <NavSecondary items={menuData.navSecondary} className="mt-auto"/>
       </SidebarContent>
       <SidebarFooter>
-        <NavMain items={menuData.navFooter}  title=""/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

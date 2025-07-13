@@ -37,7 +37,6 @@ export const menuData = {
       url: "#",
       icon: Icon.SquareDashedKanban,
       asChild: true,
-      isActive: true,
       items: [
         { title: "All Tickets", url: "/tickets/all" },
         { title: "My Tickets", url: "/tickets/my" },
@@ -80,31 +79,16 @@ export const menuData = {
     },
   ],
 
-  navFooter: [
+  navSecondary: [
     {
       title: "Settings",
       url: "#",
       icon: Icon.Settings,
-      asChild: true,
-      items: [
-        { title: "Ticket Settings", url: "/settings/tickets" },
-        { title: "Automation Rules", url: "/settings/automation" },
-        { title: "SLA Policies", url: "/settings/sla" },
-        { title: "Tags / Categories", url: "/settings/tags" },
-        { title: "Email Templates", url: "/settings/email" },
-      ],
     },
     {
-      title: "Notifications",
-      url: "/notifications",
-      icon: Icon.Bell,
-      asChild: false,
-    },
-    {
-      title: "Help & Support",
-      url: "/help",
+      title: "Get Help",
+      url: "#",
       icon: Icon.HelpCircle,
-      asChild: false,
     },
   ],
 };
