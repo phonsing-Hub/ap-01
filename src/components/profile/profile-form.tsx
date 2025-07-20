@@ -101,7 +101,7 @@ export function ProfileForm() {
               <FormLabel>Bio</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder={user?.bio || "Tell us about yourself"}
+                  placeholder={"Tell us about yourself"}
                   className="resize-none"
                   {...field}
                 />
