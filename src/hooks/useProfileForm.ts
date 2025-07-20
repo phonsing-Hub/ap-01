@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-import { useGoApi } from "@/hooks/useGoApi";
+import { useFetchApi } from "@/hooks/useFetchApi";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { FromUserSchema, userSchema } from "@/lib/auth/user";
 import { useLoading } from "@/components/LoadingProvider";
@@ -15,7 +15,7 @@ const baseUrlimg = process.env.NEXT_PUBLIC_API_IMG || "https://mygoapi";
 export function useProfileForm() {
   const { user, getCurrentUser, token } = useAuth();
   const { loading, setLoading } = useLoading();
-  const goApiCall = useGoApi();
+  const ApiCall = useFetchApi();
 
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -41,7 +41,7 @@ export function useProfileForm() {
     const formData = new FormData();
     formData.append("avatar", avatarFile);
 
-    await goApiCall(`/users/${user?.ID}/avatar`, {
+    await ApiCall(`/users/${user?.id}/avatar`, {
       method: "POST",
       body: formData,
     });
@@ -73,7 +73,7 @@ const handleSubmit = async (data: FromUserSchema) => {
     }
 
     if (hasFormChanges) {
-      await goApiCall(`/users/${user?.ID}`, {
+      await ApiCall(`/users/${user?.id}`, {
         method: "PUT",
         body: JSON.stringify(data),
       });
@@ -86,7 +86,6 @@ const handleSubmit = async (data: FromUserSchema) => {
     }
 
   } catch (err) {
-    console.error(err);
     const errorMessage =
       err instanceof Error ? err.message : "An unknown error occurred.";
     toast.error("Failed to update profile", {

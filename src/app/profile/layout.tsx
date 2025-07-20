@@ -3,6 +3,11 @@ import { Sidebar } from "@/components/sidebar/Sidebar";
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/profile/sidebar-nav";
 import ProtectedRoute from "@/hooks/ProtectedRoute";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 const sidebarNavItems = [
   {

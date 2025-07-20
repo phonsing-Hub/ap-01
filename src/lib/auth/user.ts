@@ -1,33 +1,13 @@
 import { z } from "zod";
 
-
 export interface User {
-  ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string | null;
+  id: number;
   email: string;
   is_email_verified: boolean;
-  phone_number: string;
-  is_phone_verified: boolean;
   first_name: string;
   last_name: string;
   display_name: string;
-  avatar: string;
-  bio: string;
-  date_of_birth: string;
-  gender: 'male' | 'female' | 'other' | string;
-  language_preference: string;
-  time_zone: string;
-  last_activity_at: string | null;
-  current_status_id: number;
-  UserStatus: {
-    id: number;
-    status_name: string;
-    description: string;
-  };
-  Credentials: any[] | null;
-  Locations: Location[];
+  avatar?: string;
 }
 
 export interface Location {
@@ -47,7 +27,6 @@ export interface Location {
   longitude: number | null;
   is_default: boolean;
 }
-
 
 export const userStatusSchema = z.object({
   id: z.number(),

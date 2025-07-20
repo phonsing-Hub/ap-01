@@ -14,7 +14,15 @@ import { TokenManager } from "./token-manager";
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (credentials: { username: string; password: string }) => Promise<void>;
+  login: (credentials: { email: string; password: string }) => Promise<void>;
+  googleLogin: (code: string) => Promise<void>;
+  register: (credentials: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    display_name: string;
+  }) => Promise<void>;
   logout: () => Promise<void>;
   getCurrentUser: (authToken: string) => Promise<void>;
   loading: boolean;
@@ -35,37 +43,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(savedToken);
       getCurrentUser(savedToken);
     } else {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   }, []);
 
-  const getCurrentUser = async (authToken: string ) => {
+  const getCurrentUser = async (authToken: string) => {
     try {
       const response = await apiClient.getCurrentUser(authToken);
-      // TokenManager.setToken(response.token);
-      // setToken(response.token);
+      TokenManager.setToken(response.token);
+      setToken(response.token);
       setUser(response.user);
     } catch (error) {
-      console.error("Failed to get current user:", error);
       TokenManager.removeToken();
       setToken(null);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
-  const login = async (credentials: { username: string; password: string }) => {
+  const register = async (credentials: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    display_name: string;
+  }) => {
+    try {
+      const response = await apiClient.register(credentials);
+      TokenManager.setToken(response.token);
+      setToken(response.token);
+      setUser(response.user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const login = async (credentials: { email: string; password: string }) => {
     try {
       const response = await apiClient.login(credentials);
       TokenManager.setToken(response.token);
       setToken(response.token);
       setUser(response.user);
     } catch (error) {
-      console.error("Login failed:", error);
+      throw error;
+    }
+  };
+
+  const googleLogin = async (code: string) => {
+    try {
+      const response = await apiClient.googleLogin(code);
+      TokenManager.setToken(response.token);
+      setToken(response.token);
+      setUser(response.user);
+    } catch (error) {
       throw error;
     }
   };
@@ -76,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await apiClient.logout(token);
       }
     } catch (error) {
-      console.error("Logout failed:", error);
+      throw error;
     } finally {
       TokenManager.removeToken();
       setToken(null);
@@ -90,6 +120,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         token,
         login,
+        googleLogin,
+        register,
         logout,
         getCurrentUser,
         loading,

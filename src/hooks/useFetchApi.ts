@@ -1,10 +1,13 @@
 import { useAuth } from "@/lib/auth/AuthContext";
 
-export function useGoApi() {
+export const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const BASE_IMG_URL = process.env.NEXT_PUBLIC_API_IMG;
+
+export function useFetchApi() {
   const { token } = useAuth();
 
-  const goApiCall = async (endpoint: string, options: RequestInit = {}) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
+  const ApiCall = async (endpoint: string, options: RequestInit = {}) => {
+    const url = `${BASE_API_URL}${endpoint}`;
     
     // Use the Headers constructor for robust handling of different formats.
     const headers = new Headers(options.headers);
@@ -30,7 +33,6 @@ export function useGoApi() {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({ message: 'An unknown error occurred' }));
-        console.error("API Error:", errorData);
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
     
@@ -42,5 +44,5 @@ export function useGoApi() {
     return null;
   };
 
-  return goApiCall;
+  return ApiCall;
 }

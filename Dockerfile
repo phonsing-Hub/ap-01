@@ -25,7 +25,7 @@ COPY --from=builder /app/src ./src
 RUN bun install --production
 
 ENV NODE_ENV=production
-ENV PORT=4000
-EXPOSE 4000
+ENV PORT=8080
+EXPOSE 8080
 
 CMD ["bun", "next", "start"]
