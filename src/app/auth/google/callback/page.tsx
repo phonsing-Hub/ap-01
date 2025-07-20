@@ -1,14 +1,15 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthContext";
 
 import Loading from "@/components/Loading";
 
-function page() {
+function CallbackContent() {
   const { googleLogin } = useAuth();
   const params = useSearchParams();
   const router = useRouter();
+  
   useEffect(() => {
     const code = params.get("code");
     try {
@@ -30,6 +31,14 @@ function page() {
   }, [params]);
 
   return <Loading />;
+}
+
+function page() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <CallbackContent />
+    </Suspense>
+  );
 }
 
 export default page;
