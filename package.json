@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 5173",
-    "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
+    "build": "next build --no-lint",
+    "start": "nohup next start > .next/next.log 2>&1 & echo $! > .next/next.pid",
+    "stop": "kill $(cat .next/next.pid) && rm .next/next.pid",
     "lint": "next lint"
   },
   "dependencies": {
